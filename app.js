@@ -1,10 +1,23 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const axios = require('axios');
 
 const app = express();
 const PORT = 3000;
 
-app.post('/cep', async (req, res) => {
+app.use(bodyParser.json());
+
+function authenticate(req, res, next) {
+  const token = req.headers.authorization;
+
+  if (token === 'Bearer AdminEgadnet') {
+    next();
+  } else {
+    res.status(401).json({ error: 'Token de autenticação inválido' });
+  }
+}
+
+app.post('/cep', authenticate, async (req, res) => {
   const { cep } = req.body;
 
   try {
