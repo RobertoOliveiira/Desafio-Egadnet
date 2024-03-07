@@ -1,9 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const axios = require('axios');
+const NodeCache = require('node-cache');
 
 const app = express();
 const PORT = 3000;
+const cache = new NodeCache({ stdTTL: 300 });
 
 app.use(bodyParser.json());
 
@@ -34,13 +36,19 @@ function validateCEP(req, res, next) {
 app.post('/cep', authenticate, validateCEP, async (req, res) => {
   const { cep } = req.body;
 
+  const cachedData = cache.get(cep);
+  if (cachedData) {
+    return res.json({ ...cachedData, fromCache: true });
+  }
+
   try {
     const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
 
     if (response.data.erro) {
       res.status(404).json({ error: 'CEP não encontrado' });
     } else {
-      return res.json(response.data);
+      cache.set(cep, response.data, 300);
+      return res.json({ ...response.data, fromCache: false });
     }
   } catch (error) {
     res.status(500).json({ error: 'Erro interno do servidor ao buscar CEP' });
