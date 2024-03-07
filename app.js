@@ -17,7 +17,21 @@ function authenticate(req, res, next) {
   }
 }
 
-app.post('/cep', authenticate, async (req, res) => {
+function validateCEP(req, res, next) {
+  const { cep } = req.body;
+
+  if (!cep) {
+    return res.status(400).json({ error: 'CEP não informado' });
+  }
+  const regex = /^\d{8}$/;
+  if (!regex.test(cep.replace(/[^\d]/g, ''))) {
+    return res.status(400).json({ error: 'CEP deve conter 8 numeros' });
+  }
+  next();
+  return false;
+}
+
+app.post('/cep', authenticate, validateCEP, async (req, res) => {
   const { cep } = req.body;
 
   try {
