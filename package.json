@@ -1,13 +1,20 @@
 {
-  "name": "desafio-egadnet",
+  "name": "desafio",
   "version": "1.0.0",
-  "description": "Desafio API CEP ",
+  "description": "Desafio de lógica enviado pela egadnet",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "format": "eslint \"app.js\" --fix",
+    "format:check": "eslint \"app.js\""
   },
-  "author": "Roberto",
+  "author": "",
   "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.7",
+    "body-parser": "^1.20.2",
+    "express": "^4.18.3",
+    "node-cache": "^5.1.2"
+  },
   "devDependencies": {
     "eslint": "^8.57.0",
     "eslint-config-airbnb-base": "^15.0.0",
