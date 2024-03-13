@@ -2,22 +2,30 @@
   "name": "desafio",
   "version": "1.0.0",
   "description": "Desafio de lógica enviado pela egadnet",
-  "main": "app.js",
+  "main": "app.ts",
   "scripts": {
-    "format": "eslint \"app.js\" --fix",
-    "format:check": "eslint \"app.js\""
+    "format": "eslint \"app.ts\" --fix",
+    "format:check": "eslint \"app.ts\"",
+    "start": "npm run build && node ./dist/src/app.js",
+    "build": "tsc"
   },
-  "author": "",
+  "author": "Roberto",
   "license": "ISC",
+  "type": "CommonJS",
   "dependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/body-parser": "^1.19.5",
+    "@types/express": "^4.17.21",
+    "@types/node-cache": "^4.2.5",
     "axios": "^1.6.7",
+    "body-parser": "^1.20.2",
     "express": "^4.18.3",
-    "body-parser": "^1.20.2",    
     "node-cache": "^5.1.2"
   },
   "devDependencies": {
     "eslint": "^8.57.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.29.1"
+    "eslint-plugin-import": "^2.29.1",
+    "typescript": "^5.4.2"
   }
 }
